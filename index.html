@@ -1,46 +1,74 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GEA商城</title>
-<style>
-body{margin:0;padding:20px;background:#f6f6f6;font-family:Arial}
-.header{text-align:center;padding:15px 0;background:#ff4c4c;color:white;border-radius:10px}
-.goods{background:white;margin:10px 0;padding:15px;border-radius:10px}
-.name{font-size:18px;font-weight:bold}
-.price{color:red;font-size:16px;margin:5px 0}
-.buy{background:#ff4c4c;color:white;border:none;width:100%;padding:12px;border-radius:8px;font-size:16px}
-.addr{margin-top:10px;padding:10px;background:#f5f5f5;border-radius:8px;word-break:break-all;font-size:14px}
-.tip{color:green;text-align:center;margin-top:10px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .header {
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1rem;
+            color: #6c757d;
+        }
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .content h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .content p {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+        .footer {
+            margin-top: 40px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
-
 <body>
-<div class="header">🧧 GEA支付商城</div>
-
-<div class="goods">
-<div class="name">商品1</div>
-<div class="price">价格：100 GEA</div>
-<button class="buy" onclick="pay()">立即购买</button>
-</div>
-
-<div class="goods">
-<div class="name">商品2</div>
-<div class="price">价格：200 GEA</div>
-<button class="buy" onclick="pay()">立即购买</button>
-</div>
-
-<div class="addr" id="addr"></div>
-<div class="tip" id="tip"></div>
-
-<script>
-function pay(){
-  var geaAddr = "gea1vle5h50hnvrynvxkypenw9a8594tljcxq448d";
-  document.getElementById("addr").innerText = "GEA收款地址：" + geaAddr;
-  navigator.clipboard.writeText(geaAddr);
-  document.getElementById("tip").innerText = "✅ 地址已复制，请转账完成支付";
-}
-</script>
+    <div class="container">
+        <div class="header">
+            <h1>欢迎来到我的个人主页</h1>
+            <p>这是一个安全合规的静态网站示例</p >
+        </div>
+        <div class="content">
+            <h2>关于本站</h2>
+            <p>本站用于展示个人信息和项目作品，所有内容均符合国家法律法规和公序良俗。</p >
+            <p>如果你有任何问题或合作意向，欢迎通过合法渠道与我联系。</p >
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 我的个人主页. 保留所有权利.</p >
+        </div>
+    </div>
 </body>
 </html>
