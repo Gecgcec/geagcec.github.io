@@ -1,74 +1,421 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>商品展示</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f8f9fa;color:#333;padding:20px}
-.container{max-width:1000px;margin:0 auto}
-.header{text-align:center;margin-bottom:20px}
-.category{display:flex;justify-content:center;gap:10px;margin-bottom:25px;flex-wrap:wrap}
-.category button{padding:8px 14px;border:none;border-radius:20px;background:#fff;cursor:pointer}
-.category button.active{background:#3498db;color:#fff}
-.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
-.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px #0000000a}
-.card img{width:100%;height:180px;object-fit:cover;background:#eee}
-.info{padding:15px}
-.name{font-size:16px;font-weight:700;margin-bottom:6px}
-.price{color:#e74c3c;font-weight:700;margin-bottom:10px}
-.desc{font-size:14px;color:#666;margin-bottom:15px}
-.buy{display:block;background:#3498db;color:#fff;text-align:center;padding:10px;border-radius:6px;text-decoration:none}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>GEA商品 · 弹窗购买</title>
+    <style>
+        /* 基础样式 */
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background: #f4f6fa;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 16px;
+        }
+        .container {
+            max-width: 480px;
+            width: 100%;
+            background: white;
+            border-radius: 32px 32px 24px 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 24px 20px 32px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0 0 8px;
+            color: #0b1a2f;
+        }
+        .categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .categories span {
+            background: #f0f2f6;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #4a5a6e;
+        }
+        .categories span:first-child {
+            background: #0b1a2f;
+            color: white;
+        }
+
+        /* 商品卡片 */
+        .product-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .product-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid #edf2f7;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .product-image {
+            width: 80px;
+            height: 80px;
+            background: #eef2f6;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a9bb5;
+            font-size: 12px;
+            border: 1px dashed #cbd5e0;
+            flex-shrink: 0;
+        }
+        .product-info {
+            flex: 1;
+        }
+        .product-info h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 4px;
+            color: #1e293b;
+        }
+        .price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b1a2f;
+            margin: 4px 0 2px;
+        }
+        .desc {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        .buy-btn {
+            background: #0b1a2f;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(10, 30, 50, 0.2);
+            transition: 0.15s;
+            border: 1px solid #1e2e44;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .buy-btn:hover {
+            background: #1e2e44;
+        }
+
+        /* 弹窗遮罩层 (基于示例A) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1000;
+        }
+
+        /* 弹窗内容框 (基于示例A但增加内边距和圆角) */
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 28px 24px;
+            border-radius: 32px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: left;
+        }
+
+        /* 弹窗内表单样式 */
+        .modal-content h3 {
+            font-size: 24px;
+            font-weight: 650;
+            color: #0b1a2f;
+            margin-top: 0;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .product-badge {
+            background: #eef2ff;
+            color: #0b1a2f;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            margin: 0 auto 16px;
+            font-size: 15px;
+            text-align: center;
+            width: fit-content;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            font-weight: 600;
+            font-size: 15px;
+            color: #334155;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 24px;
+            font-size: 15px;
+            background: #fafbfc;
+            transition: 0.2s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #0b1a2f;
+            outline: none;
+            background: white;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+        .image-hint {
+            background: #f1f5f9;
+            border-radius: 16px;
+            padding: 8px 14px;
+            color: #475569;
+            font-size: 13px;
+            border: 1px dashed #94a3b8;
+            margin-top: 5px;
+        }
+        .submit-btn {
+            background: #0b1a2f;
+            color: white;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .submit-btn:hover {
+            background: #1e2e44;
+        }
+        .close-btn {
+            background: #e4e7eb;
+            color: #1e293b;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .close-btn:hover {
+            background: #d1d5db;
+        }
+        .footer-note {
+            text-align: center;
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 16px;
+        }
+    </style>
 </head>
 <body>
+
 <div class="container">
-  <div class="header">
-    <h2>商品展示</h2>
-  </div>
-
-  <div class="category">
-    <button class="active" onclick="show('all')">全部</button>
-    <button onclick="show('craft')">手工艺品</button>
-    <button onclick="show('book')">书籍</button>
-  </div>
-
-  <div class="products">
-    <div class="card" data-type="craft">
-      < img src="">
-      <div class="info">
-        <div class="name">手工艺品</div>
-        <div class="price">¥199</div>
-        <div class="desc">手工制作，美观实用</div>
-        <a class="buy" href="tel:15072557168">电话购买</a >
-      </div>
+    <h1>🛍️ 商品展示</h1>
+    <div class="categories">
+        <span>全部</span>
+        <span>手工艺品</span>
+        <span>书籍</span>
     </div>
 
-    <div class="card" data-type="book">
-      < img src="">
-      <div class="info">
-        <div class="name">优质书籍</div>
-        <div class="price">¥59</div>
-        <div class="desc">知识阅读，提升自己</div>
-        <a class="buy" href="tel:15072557168">电话购买</a >
-      </div>
+    <!-- 商品卡片列表 -->
+    <div class="product-grid">
+        <!-- 商品 1: 手工艺品 -->
+        <div class="product-card" data-product="手工艺品" data-price="199">
+            <div class="product-image">📸 图片</div>
+            <div class="product-info">
+                <h2>手工艺品</h2>
+                <div class="price">¥199</div>
+                <div class="desc">手工制作，美观实用</div>
+                <button class="buy-btn" data-product="手工艺品" data-price="199">⚡ GEA购买</button>
+            </div>
+        </div>
+
+        <!-- 商品 2: 优质书籍 -->
+        <div class="product-card" data-product="优质书籍" data-price="59">
+            <div class="product-image">📚 图片</div>
+            <div class="product-info">
+                <h2>优质书籍</h2>
+                <div class="price">¥59</div>
+                <div class="desc">知识阅读，提升自己</div>
+                <button class="buy-btn" data-product="优质书籍" data-price="59">⚡ GEA购买</button>
+            </div>
+        </div>
     </div>
-  </div>
+    <div class="footer-note">点击“GEA购买”使用钱包付款</div>
+</div>
+
+<!-- 弹窗结构 (基于示例A扩展) -->
+<div id="myModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>✧ GEA 购买/换货 ✧</h3>
+        <!-- 动态商品信息显示 -->
+        <div class="product-badge" id="modalProductInfo">手工艺品 · ¥199</div>
+
+        <!-- 表单字段 (融合截图2) -->
+        <div class="form-group">
+            <label>📷 图片要求 <span style="font-weight:400;">(最多6张)</span></label>
+            <textarea placeholder="例如：商品照片、包装、瑕疵细节……" rows="2"></textarea>
+            <div class="image-hint">请确保图片清晰，最多上传6张</div>
+        </div>
+
+        <div class="form-group">
+            <label>👤 买家昵称</label>
+            <input type="text" id="nickname" placeholder="你的昵称" value="">
+        </div>
+
+        <div class="form-group">
+            <label>💬 买家微信</label>
+            <input type="text" id="wechat" placeholder="用于联系发货" value="">
+        </div>
+
+        <div class="form-group">
+            <label>💳 你的 GEA 收款地址 <span style="font-weight:400;">(接收退款/换货)</span></label>
+            <input type="text" id="geaAddress" placeholder="gea1..." value="gea1v353csmgzc6azksn5gvnm6uv4mdprx2jjpgxyx">
+        </div>
+
+        <!-- 隐藏字段存储当前商品 -->
+        <input type="hidden" id="selectedProduct" value="手工艺品">
+        <input type="hidden" id="selectedPrice" value="199">
+
+        <!-- 两个按钮：提交 & 取消（基于示例A的关闭按钮） -->
+        <button class="submit-btn" id="submitOrder">✅ 提交订单</button>
+        <button class="close-btn" id="closeModalBtn">取消</button>
+    </div>
 </div>
 
 <script>
-function show(t){
-  const btns=document.querySelectorAll('.category button');
-  btns.forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  const cards=document.querySelectorAll('.card');
-  cards.forEach(c=>{
-    if(t=='all'||c.dataset.type==t) c.style.display='block';
-    else c.style.display='none';
-  })
-}
+    (function() {
+        // 获取弹窗元素
+        const modal = document.getElementById('myModal');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const submitBtn = document.getElementById('submitOrder');
+
+        // 获取弹窗内动态显示和隐藏域的元素
+        const modalProductInfo = document.getElementById('modalProductInfo');
+        const selectedProduct = document.getElementById('selectedProduct');
+        const selectedPrice = document.getElementById('selectedPrice');
+        const nicknameInput = document.getElementById('nickname');
+        const wechatInput = document.getElementById('wechat');
+        const geaInput = document.getElementById('geaAddress');
+
+        // 获取所有购买按钮
+        const buyBtns = document.querySelectorAll('.buy-btn');
+
+        // 打开弹窗的函数
+        function openModal() {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // 禁止背景滚动
+        }
+
+        // 关闭弹窗的函数
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = ''; // 恢复滚动
+        }
+
+        // 为每个购买按钮绑定点击事件，并传递商品数据
+        buyBtns.forEach(btn => {
+            btn.addEventListener('click', function(event) {
+                event.stopPropagation(); // 防止事件冒泡
+                const product = this.dataset.product || '手工艺品';
+                const price = this.dataset.price || '199';
+
+                // 更新弹窗中的商品信息
+                modalProductInfo.innerText = `${product} · ¥${price}`;
+                selectedProduct.value = product;
+                selectedPrice.value = price;
+
+                // 可选：清空之前填写的买家信息（保留地址示例）
+                nicknameInput.value = '';
+                wechatInput.value = '';
+                // 地址保留默认示例，用户可修改
+
+                openModal();
+            });
+        });
+
+        // 点击遮罩层关闭 (基于示例A的window.onclick)
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+        // 关闭按钮点击
+        closeBtn.addEventListener('click', closeModal);
+
+        // 提交按钮逻辑
+        submitBtn.addEventListener('click', function() {
+            const nickname = nicknameInput.value.trim();
+            const wechat = wechatInput.value.trim();
+            const gea = geaInput.value.trim();
+            const product = selectedProduct.value;
+            const price = selectedPrice.value;
+
+            // 简单验证
+            if (!nickname || !wechat || !gea) {
+                alert('请填写完整的买家信息 (昵称、微信、GEA地址)');
+                return;
+            }
+            if (!gea.startsWith('gea1')) {
+                alert('GEA地址一般以 gea1 开头，请确认输入正确');
+                return;
+            }
+
+            // 模拟提交成功
+            alert(`✅ 订单已提交！\n商品：${product} ¥${price}\n买家：${nickname}\n微信：${wechat}\nGEA地址：${gea.substring(0,10)}...\n\n卖家会通过微信与你联系，请留意。`);
+
+            // 可在此添加实际提交到表单服务的代码（如 Formspree）
+            // fetch('https://formspree.io/your-endpoint', { method: 'POST', body: new FormData(...) })
+
+            closeModal(); // 提交后关闭弹窗
+        });
+
+    })();
 </script>
+
 </body>
 </html>
-
