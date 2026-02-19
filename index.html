@@ -13,9 +13,9 @@
         }
         body {
             background-color: #f5f5f5;
-            padding-bottom: 70px; /* 为底部导航留出空间 */
+            padding-bottom: 70px;
         }
-        /* 顶部分类导航（横向滚动） */
+        /* 顶部分类导航 */
         .top-categories {
             background: white;
             padding: 12px 16px;
@@ -127,10 +127,6 @@
             color: #999;
             margin-top: 4px;
         }
-        .rating {
-            color: #ff9f00;
-            font-size: 12px;
-        }
         .buy-btn {
             background: #e02e24;
             color: white;
@@ -165,7 +161,7 @@
             color: #e02e24;
             font-weight: 500;
         }
-        /* 弹窗样式（保留之前的功能） */
+        /* 弹窗样式 */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -226,7 +222,7 @@
 </head>
 <body>
 
-    <!-- 顶部分类导航（可左右滑动） -->
+    <!-- 顶部分类导航 -->
     <div class="top-categories">
         <span class="category-item active">推荐</span>
         <span class="category-item">环保帽</span>
@@ -239,80 +235,76 @@
         <span class="category-item">其他</span>
     </div>
 
- <!-- 商品网格（2列） -->
+    <!-- 商品网格 -->
     <div class="product-grid">
         <!-- 商品1 -->
-        <div class="product-card" data-product="环保帽" data-price="2  Gea">
+        <div class="product-card" data-product="环保帽" data-price="2 Gea">
             <div class="product-image">
-                <!-- 图片文件名：product1.png (您只需替换这个文件) -->
                 <img src="product1.png" alt="商品图片" onerror="this.style.display='none';this.parentNode.innerHTML='📸 图片1'">
             </div>
             <div class="product-info">
                 <div class="product-title">来图定制环保帽</div>
                 <div class="price-row">
-                    <span class="price">2  Gea <small>起</small></span>
+                    <span class="price">2 Gea <small>起</small></span>
                 </div>
-                <div class="sales-info"></div>
                 <button class="buy-btn">购买</button>
             </div>
         </div>
         <!-- 商品2 -->
-        <div class="product-card" data-product="无纺布袋定做" data-price="2  Gea">
+        <div class="product-card" data-product="无纺布袋定做" data-price="2 Gea">
             <div class="product-image">
                 <img src="product2.png" alt="商品图片" onerror="this.style.display='none';this.parentNode.innerHTML='📸 图片2'">
             </div>
             <div class="product-info">
-                <div class="product-title">无纺布袋定做 logo可印字  包邮</div>
+                <div class="product-title">无纺布袋定做 logo可印字 包邮</div>
                 <div class="price-row">
                     <span class="price">2 Gea <small>起</small></span>
                 </div>
-         
                 <button class="buy-btn">购买</button>
             </div>
         </div>
         <!-- 商品3 -->
-        <div class="product-card" data-product="环保夹" data-price="1.3  Gea">
+        <div class="product-card" data-product="环保夹" data-price="1.3 Gea">
             <div class="product-image">
                 <img src="product3.png" alt="商品图片" onerror="this.style.display='none';this.parentNode.innerHTML='📸 图片3'">
             </div>
             <div class="product-info">
                 <div class="product-title">加长铝合金垃圾夹子</div>
                 <div class="price-row">
-                    <span class="price">1.3  Gea</span>
+                    <span class="price">1.3 Gea</span>
                 </div>
-             
                 <button class="buy-btn">购买</button>
             </div>
         </div>
         <!-- 商品4 -->
-        <div class="product-card" data-product="环保宣传海报" data-price="1  Gea">
+        <div class="product-card" data-product="环保宣传海报" data-price="1 Gea">
             <div class="product-image">
                 <img src="product4.png" alt="商品图片" onerror="this.style.display='none';this.parentNode.innerHTML='📸 图片4'">
             </div>
             <div class="product-info">
                 <div class="product-title">环保宣传海报PSD</div>
                 <div class="price-row">
-                    <span class="price">1  Gea</span>
+                    <span class="price">1 Gea</span>
                 </div>
-
                 <button class="buy-btn">购买</button>
             </div>
         </div>
         <!-- 商品5 -->
-        <div class="product-card" data-product="环保马甲" data-price="2  Ge">
+        <div class="product-card" data-product="环保马甲" data-price="2 Gea">
             <div class="product-image">
                 <img src="product5.png" alt="商品图片" onerror="this.style.display='none';this.parentNode.innerHTML='📸 图片5'">
             </div>
             <div class="product-info">
-                <div class="product-title"> 环保马甲 宽松版</div>
+                <div class="product-title">环保马甲 宽松版</div>
                 <div class="price-row">
-                    <span class="price">2  Gea</span>
+                    <span class="price">2 Gea</span>
                 </div>
-  
                 <button class="buy-btn">购买</button>
             </div>
         </div>
-                                      <!-- 底部导航 -->
+    </div>
+
+    <!-- 底部导航 -->
     <div class="bottom-nav">
         <div class="nav-item active">首页</div>
         <div class="nav-item">多多视频</div>
@@ -320,14 +312,20 @@
         <div class="nav-item">个人中心</div>
     </div>
 
-    <!-- GEA钱包购买弹窗（和之前一样） -->
+    <!-- GEA钱包购买弹窗（优化版，含收货地址、电话、复制按钮、二维码） -->
     <div id="purchaseModal" class="modal-overlay">
         <div class="modal-content">
             <h3>✧ GEA 购买/换货 ✧</h3>
-            <div id="modalProductInfo" style="background:#eef2ff; padding:8px; border-radius:20px; text-align:center; margin-bottom:16px;">商品名 · ¥0</div>
+            <div id="modalProductInfo" style="background:#eef2ff; padding:8px; border-radius:20px; text-align:center; margin-bottom:20px;">商品名 · 价格</div>
+
+            <!-- 买家收货信息 -->
             <div class="form-group">
-                <label>📷 图片要求 (最多6张)</label>
-                <textarea placeholder="例如：商品照片、包装、瑕疵细节……" rows="2"></textarea>
+                <label>📦 收货地址</label>
+                <input type="text" id="address" placeholder="省市区 + 详细地址">
+            </div>
+            <div class="form-group">
+                <label>📞 联系电话</label>
+                <input type="text" id="phone" placeholder="手机号码">
             </div>
             <div class="form-group">
                 <label>👤 买家昵称</label>
@@ -337,79 +335,121 @@
                 <label>💬 买家微信</label>
                 <input type="text" id="wechat" placeholder="用于联系发货">
             </div>
-            <div class="form-group">
-                <label>💳 你的 GEA 收款地址</label>
-                <input type="text" id="geaAddress" placeholder="gea1..." value="gea1vle5h50hnvrynvxkypenw9a8v594tljcxq448dx">
+
+            <hr style="margin:20px 0; border:0; border-top:1px solid #eee;">
+
+            <!-- 付款方式 -->
+            <div style="font-weight:600; margin-bottom:10px;">💳 付款方式（二选一）</div>
+
+            <!-- 方式一：地址转账 + 复制按钮 -->
+            <div style="background:#f5f5f5; padding:15px; border-radius:12px; margin-bottom:15px;">
+                <div style="font-size:13px; color:#666; margin-bottom:8px;">方式一：复制地址转账</div>
+                <div style="display:flex; gap:8px;">
+                    <input type="text" id="geaAddress" value="gea1vle5h50hnvrynvxkypenw9a8v594tljcxq448d" readonly style="flex:1; padding:10px; border:1px solid #ddd; border-radius:20px; background:white; font-family:monospace;">
+                    <button onclick="copyAddress()" style="padding:10px 15px; background:#e02e24; color:white; border:none; border-radius:20px; cursor:pointer;">复制</button>
+                </div>
             </div>
+
+            <!-- 方式二：扫码支付 -->
+            <div style="text-align: center; margin: 15px 0 20px;">
+                <div style="font-size:13px; color:#666; margin-bottom:10px;">方式二：扫码支付</div>
+                <img src="qrcode.jpg" alt="GEA收款码" style="width:160px; height:160px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+                <p style="font-size:12px; color:#666; margin-top:8px;">打开GEA钱包扫码付款</p>
+            </div>
+
+            <!-- 隐藏字段 -->
             <input type="hidden" id="selectedProduct" value="">
             <input type="hidden" id="selectedPrice" value="">
-            <button class="submit-btn" id="submitOrder">✅ 提交订单</button>
+
+            <!-- 按钮 -->
+            <button class="submit-btn" id="submitOrder">✅ 提交订单（付款后）</button>
             <button class="close-btn" id="closeModalBtn">取消</button>
+
+            <div style="font-size:12px; color:#999; text-align:center; margin-top:15px;">
+                * 付款后请提交订单，我们会通过微信联系发货
+            </div>
         </div>
     </div>
 
     <script>
-        // 弹窗逻辑（与之前相同）
+        // 获取弹窗元素
         const modal = document.getElementById('purchaseModal');
         const closeBtn = document.getElementById('closeModalBtn');
         const submitBtn = document.getElementById('submitOrder');
         const modalProductInfo = document.getElementById('modalProductInfo');
         const selectedProduct = document.getElementById('selectedProduct');
         const selectedPrice = document.getElementById('selectedPrice');
+        const addressInput = document.getElementById('address');
+        const phoneInput = document.getElementById('phone');
         const nicknameInput = document.getElementById('nickname');
         const wechatInput = document.getElementById('wechat');
-        const geaInput = document.getElementById('geaAddress');
 
         // 所有“购买”按钮
         const buyBtns = document.querySelectorAll('.buy-btn');
 
+        // 打开弹窗
         function openModal() {
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
+
+        // 关闭弹窗
         function closeModal() {
             modal.style.display = 'none';
             document.body.style.overflow = '';
         }
 
+        // 为每个购买按钮绑定事件
         buyBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 const card = this.closest('.product-card');
                 const product = card.dataset.product || '商品';
                 const price = card.dataset.price || '0';
-                modalProductInfo.innerText = `${product} · ¥${price}`;
+                modalProductInfo.innerText = `${product} · ${price}`;
                 selectedProduct.value = product;
                 selectedPrice.value = price;
+                // 清空之前填写的表单
+                addressInput.value = '';
+                phoneInput.value = '';
                 nicknameInput.value = '';
                 wechatInput.value = '';
                 openModal();
             });
         });
 
+        // 点击遮罩层关闭
         window.onclick = function(event) {
             if (event.target === modal) closeModal();
         };
+
+        // 关闭按钮
         closeBtn.addEventListener('click', closeModal);
 
+        // 复制地址函数
+        function copyAddress() {
+            const addrInput = document.getElementById('geaAddress');
+            addrInput.select();
+            addrInput.setSelectionRange(0, 99999); // 对移动设备友好
+            document.execCommand('copy');
+            alert('GEA地址已复制到剪贴板');
+        }
+
+        // 提交订单
         submitBtn.addEventListener('click', function() {
+            const address = addressInput.value.trim();
+            const phone = phoneInput.value.trim();
             const nickname = nicknameInput.value.trim();
             const wechat = wechatInput.value.trim();
-            const gea = geaInput.value.trim();
-            if (!nickname || !wechat || !gea) {
-                alert('请填写完整信息');
+
+            if (!address || !phone || !nickname || !wechat) {
+                alert('请填写完整的收货信息（地址、电话、昵称、微信）');
                 return;
             }
-            if (!gea.startsWith('gea1')) {
-                alert('GEA地址以gea1开头');
-                return;
-            }
-            alert(`✅ 订单提交成功！\n商品：${selectedProduct.value}\n价格：¥${selectedPrice.value}\n我们会通过微信联系您。`);
+
+            alert(`✅ 订单提交成功！\n商品：${selectedProduct.value}\n价格：${selectedPrice.value}\n我们会通过微信联系您。`);
             closeModal();
         });
     </script>
-
-    
-    </div>
 </body>
-</html> 
+</html>
